@@ -1,0 +1,84 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        
+        "applicationName": {
+            "value": "simpletestwebappsilviu"
+            
+            
+        },
+        "svcPlanName": {
+            "value": "simpletestwebappplansilviu"
+                    
+        },    
+        "sku": {
+            "value": "Standard"
+            
+        },    
+        "sqlServerName" : {
+            "value": "simpletestwebapp123silviu"
+            
+        },
+        "administratorLogin": {
+            "value": "cscsilviusilviu"
+            
+        },
+        "administratorLoginPassword": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/6804d92f-755e-4d9c-b62d-82f7c3be954d/resourceGroups/simpletestappvsm/providers/Microsoft.KeyVault/vaults/sqlPasssimpletestapp"
+                },
+                "secretName": "SQLPassword"
+            }
+            
+        },
+        "sqldbName" : {
+            "value": "simpletestwebappsilviu_db"
+            
+        },
+        "autoscaleEnabled": {
+            "value": false
+            
+        },
+        "svcPlanSize": {
+            "value": "S1"
+            
+        },
+        "minimumCapacity": {
+            "value": 2
+            
+        },
+        "maximumCapacity": {
+            "value": 5
+            
+        },
+        "defaultCapacity": {
+            "value": 5
+            
+        },
+        "metricName": {
+            "value": "CpuPercentage"
+            
+        },
+        "metricThresholdToScaleOut": {
+            "value": 60
+            
+        },
+        "metricThresholdToScaleIn": {
+            "value": 20
+            
+        },
+        "changePercentScaleOut": {
+            "value": 20
+            
+        },
+        "changePercentScaleIn": {
+            "value": 10
+            
+        }
+           
+        
+        
+    }
+}

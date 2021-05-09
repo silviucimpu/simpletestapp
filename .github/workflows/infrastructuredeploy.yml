@@ -1,0 +1,38 @@
+name: Deploy Infrastructure and Web application | SQL(SERVER AND DB) | APP SERVICE | APP PLAN | APP METRICS | WEP APP |
+
+on: [workflow_dispatch]
+
+env:
+  AZURE_WEBAPP_NAME: simpletestwebappsilviu    # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: './simpletestapp'      # set this to the path to your web app project, defaults to the repository root
+  
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@main
+    #login to azure
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_TEST_CREDENTIALS }}
+    #build up the infrastructure
+    - uses: azure/arm-deploy@v1
+      with:
+        resourceGroupName: simpletestappvsm
+        template: ./appservicetemplate.json
+        parameters: ./appservicetemplate.parameters.json
+    
+    
+    - uses: TonyBogdanov/zip@1.0
+      with:
+        args: unzip -qq ./simpletestapp.zip -d ./simpletestapp #unzips the package on the runner 
+
+           
+     #moving the files to the web app
+    - uses: azure/webapps-deploy@v2
+      with: 
+        app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
+        package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+        
+        
